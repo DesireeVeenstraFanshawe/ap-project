@@ -1,0 +1,57 @@
+
+
+hr {
+    height: 0.1rem;
+    background-color: black;
+    border: none;
+    width: 100%;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#detailSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    width: 80%;
+    height: 90vh;
+    margin: auto;
+}
+
+#detailSection > h1 {
+    margin-top: 2%;
+} 
+
+#detailSection > section {
+    /* border: 1px solid black; */
+    width: 100%;
+}
+
+
+.venueRankings {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.venueName a {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: black;
+}
+
+.venueCost {
+    color: #1F9D05;
+}
+
+.venueScore {
+    color: #FFE100;
+}
+
+#eventsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    align-items: start;
+}

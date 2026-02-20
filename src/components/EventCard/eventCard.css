@@ -1,0 +1,25 @@
+
+
+.eventCard p {
+    color: white;
+}
+
+.eventCard {
+    background-color: grey;
+    width: 100%;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5%;
+}
+
+.eventName {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.startDate, .endDate, .location, .frequency {
+    color: rgb(87, 87, 87);
+}

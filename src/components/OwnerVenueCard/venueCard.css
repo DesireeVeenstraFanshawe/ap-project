@@ -1,0 +1,33 @@
+
+
+.venueCard {
+    border: 1px solid black;
+
+    width: 10%;
+    padding: 0.5rem;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.venueRankings {
+    display: flex;
+    justify-content: start;
+    gap: 5%;
+    flex-wrap: wrap;
+}
+
+.venueName a {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: black;
+}
+
+.venueCost {
+    color: #1F9D05;
+}
+
+.venueScore {
+    color: #FFE100;
+    flex-basis: 100%;
+}
