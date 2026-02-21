@@ -14,9 +14,11 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 2%;
-    width: 80%;
-    height: 90vh;
+
     margin: auto;
+    width: 80%;
+    height: 200vh !important;
+    
 }
 
 #detailSection > h1 {
@@ -47,4 +49,8 @@ hr {
 
 .venueScore {
     color: #FFE100;
+}
+
+#mapSection {
+    height: 90vh;
 }

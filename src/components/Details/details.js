@@ -1,7 +1,13 @@
+import { useState } from "react"
 import Header from "../Header/Header"
 import "./details.css"
 
+/* import {APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps" */
+
+
 export default function Details (props) {
+    const [open, setOpen] = useState(false)
+
 
     return (
         <>
@@ -35,6 +41,28 @@ export default function Details (props) {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at lorem vitae est ornare luctus. 
                         Pellentesque a arcu nec lectus mattis euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
                     </p>
+                    <hr></hr>
+            </section>
+            <section id="mapSection">
+                    <h2>Location</h2>
+                    
+{/*                     <APIProvider>
+                        <Map
+                            defaultZoom={13}
+                            defaultCenter={{ lat: -33.860664, lng: 151.208138 }}
+                            mapId={"8e0468e996c5bdf3b9dbf482"}
+                            >
+                            <AdvancedMarker position={{ lat: -33.860664, lng: 151.208138 }} onClick={() => setOpen(true)}>
+                                <Pin/>
+                            </AdvancedMarker>
+                            {open && (
+                                <InfoWindow position={{ lat: -33.860664, lng: 151.208138 }} onCloseClick={() => setOpen(false)}>
+                                    <p>I'm in Sydney!</p>
+                                </InfoWindow>
+                            )}
+                        </Map>
+                    </APIProvider> */}
+
                     <hr></hr>
             </section>
         </section>
