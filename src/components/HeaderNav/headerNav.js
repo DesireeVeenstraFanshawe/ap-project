@@ -1,14 +1,21 @@
+import { Link, useLocation } from "react-router-dom";
+import "./headerNav.css";
 
-import { Link } from "react-router"
-import "./headerNav.css"
+export default function HeaderNav() {
+  const location = useLocation();
 
-export default function HeaderNav (props) {
+  const isHome = location.pathname.startsWith("/city-select") || location.pathname === "/";
+  const isDeals = location.pathname.startsWith("/deals");
 
-    return (
-        <section id="header-nav">
-            <p className="p-title selected"><Link to="/city-select">Bars</Link></p>
-            <p className="p-title">Clubs</p>
-            <p className="p-title">Karaoke</p>
-        </section>
-    )
+  return (
+    <section id="header-nav">
+      <p className={isHome ? "p-title selected" : "p-title"}>
+        <Link to="/city-select">Home</Link>
+      </p>
+
+      <p className={isDeals ? "p-title selected" : "p-title"}>
+        <Link to="/deals">Events & Deals</Link>
+      </p>
+    </section>
+  );
 }

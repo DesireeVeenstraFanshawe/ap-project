@@ -1,42 +1,61 @@
-#ownerDetailSection {
-  width: 70%;
+.ownerDetailsWrap {
+  width: 80%;
   margin: 2rem auto;
 }
 
-.ownerForm {
+.ownerDetailsForm {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+  max-width: 800px;
 }
 
-.ownerForm input,
-.ownerForm textarea,
-.ownerForm select {
-  padding: 0.75rem;
+.ownerDetailsForm input,
+.ownerDetailsForm select,
+.ownerDetailsForm textarea {
+  width: 100%;
+  padding: 0.8rem;
   border-radius: 0.75rem;
   border: 1px solid #ccc;
+  margin-top: 0.35rem;
 }
 
-.ownerForm textarea {
-  min-height: 100px;
+.ownerDetailsForm textarea {
+  min-height: 110px;
 }
 
-.checkboxGroup {
-  margin-top: 1rem;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.buttonRow {
+.ownerChecks {
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.errorText {
+.ownerDetailsActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.ownerDetailsActions button {
+  padding: 0.8rem 1rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ownerDetailsActions .danger {
+  background: crimson;
+  color: white;
+}
+
+.ownerDetailsMsg {
+  color: #0b5;
+  font-weight: bold;
+}
+
+.ownerDetailsError {
   color: crimson;
-}
-
-.successText {
-  color: green;
+  font-weight: bold;
 }

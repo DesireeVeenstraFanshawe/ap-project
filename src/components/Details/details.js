@@ -32,7 +32,6 @@ export default function Details() {
         }
 
         const snap = await getDoc(doc(db, "restaurants", id));
-
         if (!snap.exists()) {
           setErr("Restaurant not found.");
           setVenue(null);
@@ -65,6 +64,7 @@ export default function Details() {
         }
     }
 
+  const events = Array.isArray(venue?.events) ? venue.events : [];
 
   return (
     <>
@@ -82,28 +82,30 @@ export default function Details() {
           </section>
         ) : (
           <>
-            {/* Title */}
             <h1>{venue?.name || "Restaurant"}</h1>
 
             {/* Address */}
 {/*             <section id="venueDesc">
               
             </section> */}
+            <section id="venueDesc">
+              <h2>Address</h2>
+              <p>{venue?.address || "Address not provided."}</p>
 
-            <section id="offersSection">
-              <hr />
-              <h2>What’s Available</h2>
+              {venue?.priceLevel && (
+                <p>
+                  <strong>Price:</strong> {venue.priceLevel}
+                </p>
+              )}
 
-              <ul style={{ marginTop: "0.5rem" }}>
-                {venue?.hasHappyHour ? <li>Happy Hour</li> : <li>No Happy Hour listed</li>}
-                {venue?.hasDailySpecials ? <li>Daily Specials</li> : <li>No Daily Specials listed</li>}
-                {venue?.hasEvents ? <li>Events</li> : <li>No Events listed</li>}
-              </ul>
-
-              <hr />
+              {typeof venue?.rating === "number" && (
+                <p>
+                  <strong>Rating:</strong> {venue.rating}
+                </p>
+              )}
             </section>
 
-            {(venue?.about || venue?.offers || venue?.rating || venue?.priceLevel) && (
+            {venue?.about && (
               <section>
                 <h2>More Info</h2>
                 {venue?.about && (
@@ -147,6 +149,58 @@ export default function Details() {
                     </Map>
                 </APIProvider>
               
+                <h2>About</h2>
+                <p>{venue.about}</p>
+              </section>
+            )}
+
+            <section id="offersSection">
+              <hr />
+              <h2>Deals & Events</h2>
+
+              {/* Happy Hour */}
+              <h3>Happy Hour</h3>
+              {venue?.hasHappyHour ? (
+                <p>{venue?.happyHourDetails || "Happy hour is available, but details were not added yet."}</p>
+              ) : (
+                <p>No happy hour listed.</p>
+              )}
+
+              {/* Daily Specials */}
+              <h3>Daily Specials</h3>
+              {venue?.hasDailySpecials ? (
+                <p>{venue?.dailySpecialsDetails || "Daily specials are available, but details were not added yet."}</p>
+              ) : (
+                <p>No daily specials listed.</p>
+              )}
+
+              {/* Events */}
+              <h3>Events</h3>
+              {venue?.hasEvents ? (
+                events.length === 0 ? (
+                  <p>Events are available, but none were added yet.</p>
+                ) : (
+                  <ul style={{ marginTop: "0.5rem" }}>
+                    {events.map((ev, idx) => (
+                      <li key={idx} style={{ marginBottom: "0.5rem" }}>
+                        <strong>{ev.title || "Event"}</strong>
+                        {(ev.day || ev.time) && (
+                          <span>
+                            {" "}
+                            — {ev.day || "Day TBD"}
+                            {ev.time ? ` at ${ev.time}` : ""}
+                          </span>
+                        )}
+                        {ev.details && <div>{ev.details}</div>}
+                      </li>
+                    ))}
+                  </ul>
+                )
+              ) : (
+                <p>No events listed.</p>
+              )}
+
+              <hr />
             </section>
           </>
         )}

@@ -5,98 +5,132 @@ import "./ownerDetails.css";
 
 import { auth, db } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 export default function OwnerDetails() {
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [restaurant, setRestaurant] = useState(null);
+  const [user, setUser] = useState(null);
+  const [venue, setVenue] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState("");
   const [msg, setMsg] = useState("");
 
+  // form fields
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [priceLevel, setPriceLevel] = useState("$");
-  const [rating, setRating] = useState(0);
   const [about, setAbout] = useState("");
   const [offers, setOffers] = useState("");
-
   const [hasHappyHour, setHasHappyHour] = useState(false);
   const [hasDailySpecials, setHasDailySpecials] = useState(false);
   const [hasEvents, setHasEvents] = useState(false);
 
   useEffect(() => {
-  const unsub = onAuthStateChanged(auth, (u) => {
-        if (!u) navigate("/sign-up-in");
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      if (!u) {
+        navigate("/sign-up-in");
+        return;
+      }
+      setUser(u);
+      await loadVenue(u.uid);
     });
 
     return () => unsub();
-    }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, id]);
 
-  useEffect(() => {
-    async function loadRestaurant() {
-      setLoading(true);
-      setErr("");
+  async function loadVenue(uid) {
+    setErr("");
+    setMsg("");
+    setLoading(true);
 
-      try {
-        const snap = await getDoc(doc(db, "restaurants", id));
-        if (!snap.exists()) {
-          setErr("Restaurant not found.");
-          return;
-        }
-
-        const data = { id: snap.id, ...snap.data() };
-        setRestaurant(data);
-
-        setName(data.name || "");
-        setAddress(data.address || "");
-        setPriceLevel(data.priceLevel || "$");
-        setRating(data.rating || 0);
-        setAbout(data.about || "");
-        setOffers(data.offers || "");
-        setHasHappyHour(!!data.hasHappyHour);
-        setHasDailySpecials(!!data.hasDailySpecials);
-        setHasEvents(!!data.hasEvents);
-      } catch (e) {
-        setErr("Failed to load restaurant.");
-      } finally {
-        setLoading(false);
+    try {
+      if (!id) {
+        setErr("No restaurant id.");
+        return;
       }
-    }
 
-    if (id) loadRestaurant();
-  }, [id]);
+      const ref = doc(db, "restaurants", id);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        setErr("Restaurant not found.");
+        return;
+      }
+
+      const data = { id: snap.id, ...snap.data() };
+
+      // Security check in UI (rules should also enforce this)
+      if (data.ownerUid !== uid) {
+        setErr("You don't have permission to edit this restaurant.");
+        return;
+      }
+
+      setVenue(data);
+
+      // populate form
+      setName(data.name || "");
+      setAddress(data.address || "");
+      setPriceLevel(data.priceLevel || "$");
+      setAbout(data.about || "");
+      setOffers(data.offers || "");
+      setHasHappyHour(!!data.hasHappyHour);
+      setHasDailySpecials(!!data.hasDailySpecials);
+      setHasEvents(!!data.hasEvents);
+    } catch (e) {
+      setErr(e?.message || "Failed to load restaurant.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleSave(e) {
     e.preventDefault();
+    if (!venue || !user) return;
+
     setErr("");
     setMsg("");
-
-    if (!restaurant) return;
-
     setSaving(true);
 
     try {
-      await updateDoc(doc(db, "restaurants", restaurant.id), {
-        name,
-        address,
+      await updateDoc(doc(db, "restaurants", venue.id), {
+        name: name.trim(),
+        address: address.trim(),
         priceLevel,
-        rating: Number(rating),
         about,
         offers,
         hasHappyHour,
         hasDailySpecials,
         hasEvents,
-        updatedAt: Date.now(),
       });
 
-      setMsg("Saved successfully!");
+      setMsg("Saved!");
     } catch (e) {
-      setErr("Failed to save.");
+      setErr(e?.message || "Failed to save changes.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete() {
+    if (!venue || !user) return;
+
+    const ok = window.confirm("Delete this restaurant? This cannot be undone.");
+    if (!ok) return;
+
+    setErr("");
+    setMsg("");
+    setSaving(true);
+
+    try {
+      await deleteDoc(doc(db, "restaurants", venue.id));
+      navigate("/owner-page");
+    } catch (e) {
+      setErr(e?.message || "Failed to delete restaurant.");
     } finally {
       setSaving(false);
     }
@@ -106,55 +140,55 @@ export default function OwnerDetails() {
     <>
       <Header />
 
-      <section id="ownerDetailSection">
+      <section className="ownerDetailsWrap">
+        <h1>Manage Restaurant</h1>
+
         {loading ? (
           <p>Loading...</p>
+        ) : err ? (
+          <>
+            <p className="ownerDetailsError">{err}</p>
+            <button onClick={() => navigate("/owner-page")}>Back</button>
+          </>
         ) : (
           <>
-            <h1>Edit Restaurant</h1>
+            <form onSubmit={handleSave} className="ownerDetailsForm">
+              <label>
+                Name
+                <input value={name} onChange={(e) => setName(e.target.value)} disabled={saving} />
+              </label>
 
-            {err && <p className="errorText">{err}</p>}
-            {msg && <p className="successText">{msg}</p>}
+              <label>
+                Address
+                <input value={address} onChange={(e) => setAddress(e.target.value)} disabled={saving} />
+              </label>
 
-            <form onSubmit={handleSave} className="ownerForm">
-              <label>Name</label>
-              <input value={name} onChange={(e) => setName(e.target.value)} />
+              <label>
+                Price Level
+                <select value={priceLevel} onChange={(e) => setPriceLevel(e.target.value)} disabled={saving}>
+                  <option value="$">$</option>
+                  <option value="$$">$$</option>
+                  <option value="$$$">$$$</option>
+                </select>
+              </label>
 
-              <label>Address</label>
-              <input value={address} onChange={(e) => setAddress(e.target.value)} />
+              <label>
+                About
+                <textarea value={about} onChange={(e) => setAbout(e.target.value)} disabled={saving} />
+              </label>
 
-              <label>Price Level</label>
-              <select
-                value={priceLevel}
-                onChange={(e) => setPriceLevel(e.target.value)}
-              >
-                <option value="$">$</option>
-                <option value="$$">$$</option>
-                <option value="$$$">$$$</option>
-              </select>
+              <label>
+                Offers
+                <textarea value={offers} onChange={(e) => setOffers(e.target.value)} disabled={saving} />
+              </label>
 
-              <label>Rating</label>
-              <input
-                type="number"
-                step="0.1"
-                min="0"
-                max="5"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-              />
-
-              <label>About</label>
-              <textarea value={about} onChange={(e) => setAbout(e.target.value)} />
-
-              <label>Food & Drink Offered</label>
-              <textarea value={offers} onChange={(e) => setOffers(e.target.value)} />
-
-              <div className="checkboxGroup">
+              <div className="ownerChecks">
                 <label>
                   <input
                     type="checkbox"
                     checked={hasHappyHour}
                     onChange={(e) => setHasHappyHour(e.target.checked)}
+                    disabled={saving}
                   />
                   Happy Hour
                 </label>
@@ -164,6 +198,7 @@ export default function OwnerDetails() {
                     type="checkbox"
                     checked={hasDailySpecials}
                     onChange={(e) => setHasDailySpecials(e.target.checked)}
+                    disabled={saving}
                   />
                   Daily Specials
                 </label>
@@ -173,20 +208,30 @@ export default function OwnerDetails() {
                     type="checkbox"
                     checked={hasEvents}
                     onChange={(e) => setHasEvents(e.target.checked)}
+                    disabled={saving}
                   />
                   Events
                 </label>
               </div>
 
-              <div className="buttonRow">
+              {msg && <p className="ownerDetailsMsg">{msg}</p>}
+              {err && <p className="ownerDetailsError">{err}</p>}
+
+              <div className="ownerDetailsActions">
                 <button type="submit" disabled={saving}>
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => navigate("/owner-page")}
+                  className="danger"
+                  onClick={handleDelete}
+                  disabled={saving}
                 >
+                  Delete Restaurant
+                </button>
+
+                <button type="button" onClick={() => navigate("/owner-page")} disabled={saving}>
                   Back
                 </button>
               </div>

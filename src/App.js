@@ -8,6 +8,8 @@ import CitySelect from './components/CitySelect/citySelect.js';
 import OwnerPage from './components/OwnerPage/ownerPage.js';
 import OwnerDetails from './components/OwnerDetails/OwnerDetails.js';
 import RequireRole from "./components/Auth/RequireRole";
+import Listings from "./components/Listings/Listings";
+import Deals from "./components/Deals/deals.js";
 
 
 
@@ -25,6 +27,7 @@ function App() {
           <Route path="/city-select" element={<CitySelect />} />
           <Route path="/owner-page" element={<OwnerPage />} />
           <Route path="/owner-details/:id" element={<OwnerDetails />} />
+          <Route path="/listings" element={<Listings />} />
           <Route path="/" element={
             <RequireRole role="customer">
               <Home/>
@@ -42,6 +45,7 @@ function App() {
               <OwnerPage/>
             </RequireRole>
           } />
+          <Route path="/deals" element={<Deals />} />
         </Routes>
       </BrowserRouter>
     </APIProvider>

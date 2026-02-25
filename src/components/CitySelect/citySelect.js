@@ -66,9 +66,7 @@ export default function CitySelect() {
       <Header />
       <section id="citySelectSection">
         <h1>Select your city</h1>
-        <p className="city-hint">
-          For this class demo, only Calgary is enabled.
-        </p>
+       
 
         <select value={cityId} onChange={(e) => setCityId(e.target.value)} disabled>
           <option value={CALGARY.id}>{CALGARY.name}</option>

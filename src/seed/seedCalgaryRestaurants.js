@@ -17,8 +17,15 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: true,
+    happyHourDetails: "Mon–Fri 3–6pm: $6 pints, $5 highballs, $10 nachos.",
+    dailySpecialsDetails: "Tues: Taco Night • Thurs: Wing Night • Sun: Burger + beer deal.",
+    events: [
+      { title: "Trivia Night", day: "Wednesday", time: "7:00 PM", details: "Teams up to 6. Prizes for top 3 teams." },
+      { title: "Live Indie Band", day: "Friday", time: "9:30 PM", details: "No cover before 10pm." },
+    ],
     createdAt: now,
   },
+
   {
     id: "national-10th",
     name: "National on 10th",
@@ -32,8 +39,14 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: false,
     hasEvents: true,
+    happyHourDetails: "Daily 4–6pm: $7 cocktails, $5 beer.",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "DJ Saturdays", day: "Saturday", time: "10:00 PM", details: "Top 40 + hip hop." },
+    ],
     createdAt: now,
   },
+
   {
     id: "craft-beer-market",
     name: "Craft Beer Market",
@@ -47,8 +60,12 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: false,
+    happyHourDetails: "Mon–Fri 2–5pm: $5 drafts.",
+    dailySpecialsDetails: "Daily chef’s special + beer pairing.",
+    events: [],
     createdAt: now,
   },
+
   {
     id: "trolley-5",
     name: "Trolley 5",
@@ -62,8 +79,14 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: true,
+    happyHourDetails: "Mon–Fri 3–6pm: $6 house beers.",
+    dailySpecialsDetails: "Wing Wednesdays + Sunday brunch deal.",
+    events: [
+      { title: "Live Band Night", day: "Friday", time: "8:30 PM", details: "Local Calgary bands." },
+    ],
     createdAt: now,
   },
+
   {
     id: "pinbar",
     name: "PinBar",
@@ -77,8 +100,14 @@ const calgaryRestaurants = [
     hasHappyHour: false,
     hasDailySpecials: true,
     hasEvents: true,
+    happyHourDetails: "",
+    dailySpecialsDetails: "Sunday arcade free-play hour.",
+    events: [
+      { title: "Pinball Tournament", day: "Saturday", time: "7:00 PM", details: "Winner gets free drink vouchers." },
+    ],
     createdAt: now,
   },
+
   {
     id: "cowboys",
     name: "Cowboys Dance Hall",
@@ -92,8 +121,14 @@ const calgaryRestaurants = [
     hasHappyHour: false,
     hasDailySpecials: false,
     hasEvents: true,
+    happyHourDetails: "",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "Country Night", day: "Friday", time: "9:00 PM", details: "Line dancing + country DJ." },
+    ],
     createdAt: now,
   },
+
   {
     id: "greta-bar",
     name: "Greta Bar",
@@ -107,8 +142,14 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: false,
     hasEvents: true,
+    happyHourDetails: "Daily 4–6pm: $7 cocktails.",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "Arcade Tournament", day: "Saturday", time: "8:00 PM", details: "Sign up at 7:30pm." },
+    ],
     createdAt: now,
   },
+
   {
     id: "hayden-block",
     name: "Hayden Block",
@@ -122,8 +163,12 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: false,
+    happyHourDetails: "Mon–Fri 3–5pm: $6 draft beers.",
+    dailySpecialsDetails: "Brisket sandwich combo special.",
+    events: [],
     createdAt: now,
   },
+
   {
     id: "blanco-cantina",
     name: "Blanco Cantina",
@@ -137,8 +182,12 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: false,
+    happyHourDetails: "Mon–Thu 2–5pm: $6 margaritas.",
+    dailySpecialsDetails: "Taco Tuesday $4 tacos.",
+    events: [],
     createdAt: now,
   },
+
   {
     id: "bottlescrew-bills",
     name: "Bottlescrew Bill’s",
@@ -152,8 +201,14 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: true,
     hasEvents: true,
+    happyHourDetails: "Daily 3–6pm: $5 draft beer.",
+    dailySpecialsDetails: "Wing Night Thursdays.",
+    events: [
+      { title: "Beer Passport Night", day: "Thursday", time: "7:00 PM", details: "Sample beers from around the world." },
+    ],
     createdAt: now,
   },
+
   {
     id: "rose-crown",
     name: "Rose & Crown Pub",
@@ -167,53 +222,74 @@ const calgaryRestaurants = [
     hasHappyHour: true,
     hasDailySpecials: false,
     hasEvents: true,
+    happyHourDetails: "Mon–Fri 4–6pm: $6 pints.",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "Live Music", day: "Saturday", time: "9:00 PM", details: "Local bands." },
+    ],
     createdAt: now,
   },
+
   {
-  id: "cold-garden",
-  name: "Cold Garden Beverage Co.",
-  address: "1100 11 St SE, Calgary, AB",
-  cityId: "calgary",
-  ownerUid: null,
-  rating: 4.6,
-  priceLevel: "$$",
-  about: "Popular Inglewood brewery with colorful decor and relaxed vibes.",
-  offers: "Rotating craft beers and seasonal releases.",
-  hasHappyHour: true,
-  hasDailySpecials: false,
-  hasEvents: true,
-  createdAt: now,
-},
-{
-  id: "unicorn-pub",
-  name: "The Unicorn Pub",
-  address: "223 8 Ave SW, Calgary, AB",
-  cityId: "calgary",
-  ownerUid: null,
-  rating: 4.1,
-  priceLevel: "$$",
-  about: "Multi-level pub with dance floor and late-night DJ events.",
-  offers: "Student nights and weekend DJ parties.",
-  hasHappyHour: true,
-  hasDailySpecials: false,
-  hasEvents: true,
-  createdAt: now,
-},
-{
-  id: "home-and-away",
-  name: "Home & Away",
-  address: "1207 1 St SW, Calgary, AB",
-  cityId: "calgary",
-  ownerUid: null,
-  rating: 4.3,
-  priceLevel: "$$",
-  about: "Sports bar with big screens, pub food, and vibrant atmosphere.",
-  offers: "Game-day specials and wing nights.",
-  hasHappyHour: true,
-  hasDailySpecials: true,
-  hasEvents: false,
-  createdAt: now,
-},
+    id: "cold-garden",
+    name: "Cold Garden Beverage Co.",
+    address: "1100 11 St SE, Calgary, AB",
+    cityId: "calgary",
+    ownerUid: null,
+    rating: 4.6,
+    priceLevel: "$$",
+    about: "Popular Inglewood brewery with colorful decor and relaxed vibes.",
+    offers: "Rotating craft beers and seasonal releases.",
+    hasHappyHour: true,
+    hasDailySpecials: false,
+    hasEvents: true,
+    happyHourDetails: "Daily 3–6pm: $6 pints, $7 seasonal pours.",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "Taproom Bingo", day: "Tuesday", time: "7:00 PM", details: "Free to play. Prizes every round." },
+    ],
+    createdAt: now,
+  },
+
+  {
+    id: "unicorn-pub",
+    name: "The Unicorn Pub",
+    address: "223 8 Ave SW, Calgary, AB",
+    cityId: "calgary",
+    ownerUid: null,
+    rating: 4.1,
+    priceLevel: "$$",
+    about: "Multi-level pub with dance floor and late-night DJ events.",
+    offers: "Student nights and weekend DJ parties.",
+    hasHappyHour: true,
+    hasDailySpecials: false,
+    hasEvents: true,
+    happyHourDetails: "Mon–Fri 4–6pm: $5 bottles + $8 mixed drinks.",
+    dailySpecialsDetails: "",
+    events: [
+      { title: "Throwback DJ Night", day: "Friday", time: "10:00 PM", details: "2000s hits + requests." },
+    ],
+    createdAt: now,
+  },
+
+  {
+    id: "home-and-away",
+    name: "Home & Away",
+    address: "1207 1 St SW, Calgary, AB",
+    cityId: "calgary",
+    ownerUid: null,
+    rating: 4.3,
+    priceLevel: "$$",
+    about: "Sports bar with big screens, pub food, and vibrant atmosphere.",
+    offers: "Game-day specials and wing nights.",
+    hasHappyHour: true,
+    hasDailySpecials: true,
+    hasEvents: false,
+    happyHourDetails: "Mon–Fri 3–6pm: $6 beers, $9 apps.",
+    dailySpecialsDetails: "Mon: Wing Night • Wed: Burger Deal • Sat: Game-day platter.",
+    events: [],
+    createdAt: now,
+  },
 ];
 
 export async function seedCalgaryRestaurants() {
@@ -223,6 +299,6 @@ export async function seedCalgaryRestaurants() {
     await setDoc(doc(colRef, r.id), r, { merge: true });
   }
 
-  console.log("Calgary restaurants seeded");
+  console.log("Calgary restaurants seeded/updated");
   return calgaryRestaurants.length;
 }
