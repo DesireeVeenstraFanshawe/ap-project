@@ -13,8 +13,8 @@ export default function Listings() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  const [day, setDay] = useState(new Date().getDay()); // today
-  const [type, setType] = useState("event"); // event | happyHour | dailySpecial
+  const [day, setDay] = useState(new Date().getDay()); 
+  const [type, setType] = useState("event"); 
 
   useEffect(() => {
     async function load() {
@@ -59,7 +59,7 @@ export default function Listings() {
         ...i,
         restaurant: restaurantById.get(i.restaurantId),
       }))
-      .filter((i) => i.restaurant); // keep only if restaurant exists
+      .filter((i) => i.restaurant); 
   }, [items, day, type, restaurantById]);
 
   return (

@@ -107,11 +107,8 @@ export default function Deals() {
       if (!showHappyHour && it.type === "Happy Hour") return false;
       if (!showSpecials && it.type === "Daily Specials") return false;
 
-      // day filter (events use real day; HH/specials are "All" for now)
       if (day !== "All") {
         if (it.day !== "All" && it.day !== day) return false;
-        // to have HH/Specials to NOT show when a day is selected, uncomment:
-        // if (it.day === "All" && it.type !== "Event") return false;
       }
 
       if (s) {
