@@ -22,7 +22,6 @@ export default function RequireRole({ role, children }) {
       }
 
       if (profile.role !== role) {
-        // redirect based on who they actually are
         if (profile.role === "owner") navigate("/owner-page");
         else navigate("/");
         return;

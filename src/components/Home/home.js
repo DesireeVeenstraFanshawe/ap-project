@@ -40,7 +40,6 @@ export default function Home() {
     }
   }
 
-  // Run once on page load
   useEffect(() => {
     loadCalgaryRestaurants();
   }, []);
@@ -92,7 +91,7 @@ export default function Home() {
       <section id="homeSection">
         <h1>Calgary Restaurants</h1>
 
-        {/* TEMP BUTTON: Click once to seed Firestore
+        {/* TEMP BUTTON
         <button
           type="button"
           className="filterBtn"

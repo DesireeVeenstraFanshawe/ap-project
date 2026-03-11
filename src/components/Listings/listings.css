@@ -1,0 +1,60 @@
+.listingsPage {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.controlsRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+}
+
+.segmented {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.segmented button {
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  background: rgb(182, 182, 182);
+  font-weight: bold;
+}
+
+.segmented button.active {
+  background: black;
+  color: white;
+}
+
+.controlsRow select {
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  background: white;
+  font-weight: bold;
+}
+
+.listingsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.listingCard {
+  background: #f2f2f2;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.restaurantName {
+  font-weight: bold;
+  margin: 0.25rem 0;
+}
+
+.muted {
+  opacity: 0.8;
+  margin: 0.25rem 0;
+}
